@@ -1,0 +1,5 @@
+{
+    "client": "booker-bot",
+    "endpoint": "http://40.126.229.205:3000",
+    "demo_root_path": "https://demos.ozfortress.com"
+}
