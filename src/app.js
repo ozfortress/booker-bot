@@ -1,6 +1,7 @@
 let Discord = require("discord.js");
 let columnify = require("columnify");
 let stringSimilarity = require('string-similarity');
+let base32 = require('hi-base32');
 
 let SSC = require("./ssc.js");
 let settings = require("./settings.js");
@@ -197,8 +198,8 @@ function RequestDemos(user, target) {
 
     users.forEach(foundUser => {
         let escapedName = SSC.vibeWorkaround(fullname(foundUser)); // Remove once vibe.d bug is fixed
-        // Demo urls use the base64 representation of a user's name
-        let encodedName = Buffer.from(escapedName).toString('base64');
+        // Demo urls use the base32 lower-case RFC 4648 representation of a user's name
+        let encodedName = base32.encode(escapedName).toLowerCase();
         let url = `${settings.ssc.demo_root_path}/${settings.ssc.client}/${encodedName}`;
 
         result.push(`- **@${fullname(foundUser)}** : ${url}`);
