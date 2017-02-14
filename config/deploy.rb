@@ -3,6 +3,7 @@ lock '3.7.1'
 
 set :application, 'BookerBot'
 set :repo_url, 'git@github.com:ozfortress/BookerBot.git'
+set :service_name, 'bookerbot.service'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
