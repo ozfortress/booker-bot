@@ -93,11 +93,13 @@ function Log() {
 }
 
 function LogError() {
+    // console.log(arguments);
     Log("[ERROR]", Array.from(arguments).slice(1).join(' '));
 }
 
 function SendError(user) {
-    LogError.apply(arguments);
+    // console.log(arguments);
+    LogError.apply(null, arguments);
     user.sendMessage("Something went wrong, please notify your local admin to check the logs");
 }
 
@@ -109,6 +111,14 @@ function BookServer(user) {
             if (error == 409) {
                 ResendServer(user);
                 return;
+            } else if (error == 500) {
+                try {
+                    let json = JSON.parse(result);
+                    if (json['statusMessage'] == "No server available") {
+                        user.sendMessage(`There are no available servers left to book`);
+                        return;
+                    }
+                } catch (e) {}
             }
 
             SendError(user, error, result);
