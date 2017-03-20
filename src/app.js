@@ -165,7 +165,7 @@ function UnbookServer(user) {
 function ServerList(channel) {
     ssc.getServers((error, result) => {
         if (error) {
-            SendError(user, error, result);
+            SendError(channel, error, result);
             return;
         }
 
