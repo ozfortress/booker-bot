@@ -1,15 +1,15 @@
 # config valid only for current version of Capistrano
-lock '3.7.1'
+lock '3.7.2'
 
 set :application, 'BookerBot'
 set :repo_url, 'git@github.com:ozfortress/BookerBot.git'
-set :service_name, 'bookerbot.service'
+set :service_name, 'booker-bot.service'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/opt/booker_bot'
+set :deploy_to, '/opt/booker-bot'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
