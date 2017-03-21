@@ -22,7 +22,7 @@ Discord Server Booker Usage\n\
 /servers                - List the status of all servers\n\
 /help                   - Display this message\n\n\
 Commands can be sent in the #bookings channel or via PM to the bot.\n\
-Bot written by smeso.\n\
+Bot written by smeso and /dev/zero.\n\
 ```";
 
 const BOOKING_DURATION = 3; // hours
@@ -100,7 +100,7 @@ function LogError() {
 function SendError(user) {
     // console.log(arguments);
     LogError.apply(null, arguments);
-    user.sendMessage("Something went wrong, please notify your local admin to check the logs");
+    user.sendMessage("Something went wrong, please notify your local administrator to check the logs.");
 }
 
 // COMMANDS
@@ -158,7 +158,7 @@ function UnbookServer(user) {
             return;
         }
 
-        user.sendMessage("You have successfully unbooked");
+        user.sendMessage("You have successfully unbooked the server.");
     });
 }
 
