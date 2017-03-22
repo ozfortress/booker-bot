@@ -204,6 +204,14 @@ function RequestDemos(user, target) {
 
     let users = FindDiscordUsers(target);
 
+    let decodedName = '';
+    try {
+        decodedName = base32.decode(target.toUpperCase());
+        users = users.concat(FindDiscordUsers(decodedName));
+    } catch (e) {
+        // Ignore
+    }
+
     let result = [];
 
     users.forEach(foundUser => {
@@ -215,7 +223,11 @@ function RequestDemos(user, target) {
         result.push(`- **@${fullname(foundUser)}** : ${url}`);
     });
 
-    let message = `Found *${users.length}* users for **'${target}'**:\n\n${result.join('\n')}`;
+    let name = `'${target}'`
+    if (decodedName !== '') {
+        name += ` (${decodedName})`
+    }
+    let message = `Found *${users.length}* users for **${name}**:\n\n${result.join('\n')}`;
     user.sendMessage(message);
 }
 
