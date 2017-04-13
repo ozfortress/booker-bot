@@ -202,17 +202,19 @@ function ServerList(channel) {
 function RequestDemos(user, target) {
     target = target || fullname(user);
 
-    let users = FindDiscordUsers(target);
+    let plainUsers = FindDiscordUsers(target);
 
     let decodedName = '';
+    let decodedUsers = [];
     try {
         decodedName = base32.decode(target.toUpperCase());
-        users = users.concat(FindDiscordUsers(decodedName));
+        decodedUsers = FindDiscordUsers(decodedName);
     } catch (e) {
         // Ignore
     }
 
     let result = [];
+    let users = plainUsers.concat(decodedUsers);
 
     users.forEach(foundUser => {
         let escapedName = SSC.vibeWorkaround(fullname(foundUser)); // Remove once vibe.d bug is fixed
@@ -224,7 +226,7 @@ function RequestDemos(user, target) {
     });
 
     let name = `'${target}'`
-    if (decodedName !== '') {
+    if (decodedUsers.length > 0) {
         name += ` (${decodedName})`
     }
     let message = `Found *${users.length}* users for **${name}**:\n\n${result.join('\n')}`;
