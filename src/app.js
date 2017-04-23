@@ -154,7 +154,7 @@ function ServerStatus(user) {
         if (error) {
             if (error == 404) {
                 user.sendMessage("You have not booked a server.");
-                returnl
+                return;
             }
 
             SendError(user, error, result);
@@ -164,6 +164,7 @@ function ServerStatus(user) {
         let server = result.server;
         let string = '```' + server['connect-string'] + '```';
         let msg = `You have booked Server **${server.name}**:\n${string}`;
+        user.sendMessage(msg);
     });
 }
 
