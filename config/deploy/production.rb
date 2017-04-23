@@ -1,4 +1,4 @@
-set :branch, "ozfortress"
+set :branch, "master"
 
 # server-based syntax
 # ======================

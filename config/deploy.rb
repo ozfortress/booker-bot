@@ -2,7 +2,7 @@
 lock '3.8.0'
 
 set :application, 'BookerBot'
-set :repo_url, 'git@github.com:ozfortress/BookerBot.git'
+set :repo_url, 'git@github.com:ozfortress/booker-bot.git'
 set :service_name, 'booker-bot.service'
 
 # Default branch is :master
