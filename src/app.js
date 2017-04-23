@@ -18,6 +18,7 @@ Discord Server Booker Usage\n\
 ---------------------------\n\
 /book                   - Book a new server\n\
 /unbook                 - Return a server\n\
+/string                 - Get the string for your active booking\n\
 /demos [username]       - Get STV demo link (user optional)\n\
 /servers                - List the status of all servers\n\
 /help                   - Display this message\n\n\
@@ -64,6 +65,7 @@ discordBot.on("message", msg => {
         unbook = () => UnbookServer(user);
         demos = () => RequestDemos(user, command[1]);
         servers = () => ServerList(msg.channel);
+        server_status = () => ServerStatus(user);
         help = () => msg.channel.sendMessage(HELP_MESSAGE);
 
         commandFunctions = {
@@ -75,6 +77,7 @@ discordBot.on("message", msg => {
             "demo": demos,
             "servers": servers,
             "status": servers,
+            "string": server_status,
             "help": help,
         }
 
@@ -143,6 +146,24 @@ function ResendServer(user) {
         let string = '```' + server['connect-string'] + '```';
         let msg = `You have already booked Server **${server.name}** for **${BOOKING_DURATION} hours**:\n${string}`;
         user.sendMessage(msg);
+    });
+}
+
+function ServerStatus(user) {
+    ssc.getBooking(fullname(user), (error, result) => {
+        if (error) {
+            if (error == 404) {
+                user.sendMessage("You have not booked a server.");
+                returnl
+            }
+
+            SendError(user, error, result);
+            return;
+        }
+
+        let server = result.server;
+        let string = '```' + server['connect-string'] + '```';
+        let msg = `You have booked Server **${server.name}**:\n${string}`;
     });
 }
 
