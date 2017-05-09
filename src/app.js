@@ -109,7 +109,9 @@ function SendError(user) {
 // COMMANDS
 
 function BookServer(user) {
-    ssc.createBooking(fullname(user), BOOKING_DURATION, (error, result) => {
+    let userFullname = fullname(user);
+
+    ssc.createBooking(userFullname, BOOKING_DURATION, (error, result) => {
         if (error) {
             if (error == 409) {
                 ResendServer(user);
@@ -130,7 +132,12 @@ function BookServer(user) {
 
         let server = result.server;
         let string = '```' + server['connect-string'] + '```';
-        let msg = `Your booking for Server **${server.name}** lasts **${BOOKING_DURATION} hours**:\n${string}`;
+        let demosURL = DemosURL(userFullname);
+        let msg = [
+            `Your booking for Server **${server.name}** lasts **${BOOKING_DURATION} hours**:`,
+            string,
+            `You can visit ${demosURL} for any recorded demos`,
+        ].join('\n');
         user.sendMessage(msg);
     });
 }
@@ -239,12 +246,10 @@ function RequestDemos(user, target) {
     let users = plainUsers.concat(decodedUsers);
 
     users.forEach(foundUser => {
-        let escapedName = SSC.vibeWorkaround(fullname(foundUser)); // Remove once vibe.d bug is fixed
-        // Demo urls use the base32 lower-case RFC 4648 representation of a user's name
-        let encodedName = base32.encode(escapedName).toLowerCase();
-        let url = `${settings.ssc.demo_root_path}/${settings.ssc.client}/${encodedName}`;
+        let foundFullname = fullname(foundUser);
+        let url = DemosURL(foundFullname);
 
-        result.push(`- **@${fullname(foundUser)}** : ${url}`);
+        result.push(`- **@${foundFullname}** : ${url}`);
     });
 
     let name = `'${target}'`
@@ -280,6 +285,14 @@ function FindDiscordUsers(query) {
 
     // Return sorted by value, the users
     return matches.sort((a, b) => a[0] - b[0]).map(e => e[1]);
+}
+
+function DemosURL(name) {
+    // Remove once vibe.d bug is fixed
+    let escapedName = SSC.vibeWorkaround(name);
+    // Demo urls use the base32 lower-case RFC 4648 representation of a user's name
+    let encodedName = base32.encode(escapedName).toLowerCase();
+    return `${settings.ssc.demo_root_path}/${settings.ssc.client}/${encodedName}`;
 }
 
 // PROCESS LISTENERS
