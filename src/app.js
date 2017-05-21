@@ -136,6 +136,7 @@ function BookServer(user) {
         let msg = [
             `Your booking for Server **${server.name}** lasts **${BOOKING_DURATION} hours**:`,
             string,
+            'Direct connect: ' + DirectLink(string),
             `You can visit ${demosURL} for any recorded demos`,
         ].join('\n');
         user.sendMessage(msg);
@@ -293,6 +294,14 @@ function DemosURL(name) {
     // Demo urls use the base32 lower-case RFC 4648 representation of a user's name
     let encodedName = base32.encode(escapedName).toLowerCase();
     return `${settings.ssc.demo_root_path}/${settings.ssc.client}/${encodedName}`;
+}
+
+function DirectLink(string) {
+    let [ip, password, rcon] = string.split(';');
+    ip = ip.trim().split(' ')[1];
+    password = password.trim().split(' ')[1].slice(1, -1);
+
+    return `steam://connect/${ip}/${password}`;
 }
 
 // PROCESS LISTENERS
