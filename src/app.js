@@ -299,7 +299,7 @@ function DemosURL(name) {
 function DirectLink(string) {
     let [ip, password, rcon] = string.split(';');
     ip = ip.trim().split(' ')[1];
-    password = password.trim().split(' ')[1].slice(1,-1);
+    password = password.trim().split(' ')[1].slice(1, -1);
 
     return `steam://connect/${ip}/${password}`;
 }
