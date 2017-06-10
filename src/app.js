@@ -137,7 +137,7 @@ function BookServer(user) {
             `Your booking for Server **${server.name}** lasts **${BOOKING_DURATION} hours**:`,
             string,
             'Direct connect: ' + DirectLink(string),
-            `You can visit ${demosURL} for any recorded demos`,
+            `Visit ${demosURL} for your recorded demos`,
         ].join('\n');
         user.sendMessage(msg);
     });
