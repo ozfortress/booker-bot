@@ -42,7 +42,7 @@ discordBot.login(settings.secrets.discord_token);
 discordBot.on("ready", () => {
     console.log("Discord Bot connected to server.");
     discordBot.user.setStatus("online");
-    let updateTimer = setInterval(function(){SetGame();}, settings.discord.updateinterval);
+    setInterval(setGame, settings.discord.ssc_poll_interval);
 });
 
 discordBot.on("message", msg => {
@@ -262,14 +262,14 @@ function RequestDemos(user, target) {
 }
 
 function SetGame() {
-    let available = 0;
     ssc.getServers((error, result) => {
         if (error) {
             LogError(error);
             return;
         }
 
-        let data = result.servers.map(server => {
+        let data = result.servers.forEach(server => {
+            let available = 0;
             let booking = server.booking;
             if (!booking) {
                 available++;
@@ -277,7 +277,7 @@ function SetGame() {
             return available;
           );
         });
-        discordBot.user.setGame(String(available) + " servers available");
+        discordBot.user.setGame(`${available} servers available`);
       }
 }
 
