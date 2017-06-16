@@ -42,7 +42,7 @@ discordBot.login(settings.secrets.discord_token);
 discordBot.on("ready", () => {
     console.log("Discord Bot connected to server.");
     discordBot.user.setStatus("online");
-    discordBot.user.setGame("catch with Elizabeth!");
+    setInterval(SetGame, settings.discord.ssc_poll_interval);
 });
 
 discordBot.on("message", msg => {
@@ -259,6 +259,24 @@ function RequestDemos(user, target) {
     }
     let message = `Found *${users.length}* users for **${name}**:\n\n${result.join('\n')}`;
     user.sendMessage(message);
+}
+
+function SetGame() {
+    ssc.getServers((error, result) => {
+        if (error) {
+            LogError(error);
+            return;
+        }
+
+        let available = 0;
+        result.servers.forEach(server => {
+            if (!server.booking) {
+                available++;
+            }
+        });
+
+        discordBot.user.setGame(`${available} servers available`);
+    });
 }
 
 // HELPERS
