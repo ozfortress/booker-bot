@@ -42,7 +42,7 @@ discordBot.login(settings.secrets.discord_token);
 discordBot.on("ready", () => {
     console.log("Discord Bot connected to server.");
     discordBot.user.setStatus("online");
-    let updateTimer = setInterval(function(){SetGame();}, settings.secrets.updateinterval);
+    let updateTimer = setInterval(function(){SetGame();}, settings.discord.updateinterval);
 });
 
 discordBot.on("message", msg => {
