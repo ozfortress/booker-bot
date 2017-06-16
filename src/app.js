@@ -266,15 +266,17 @@ function SetGame() {
         if (error) {
             LogError(error);
             return;
-        }      
+        }
+
         let available = 0;
         result.servers.forEach(server => {
-          if (!server.booking) {
-            available++;
-          }
+            if (!server.booking) {
+                available++;
+            }
         });
+
+        discordBot.user.setGame(`${available} servers available`);
     });
-    discordBot.user.setGame(`${available} servers available`);
 }
 
 // HELPERS
