@@ -1,3 +1,4 @@
 {
-    "channels": ["bookings"]
+    "channels": ["bookings"],
+    "updateinterval": 60000
 }
