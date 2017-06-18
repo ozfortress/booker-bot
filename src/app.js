@@ -37,12 +37,19 @@ let ssc = new SSC.Client({
 
 let discordBot = new Discord.Client( { fetchAllMembers: true } );
 
+let sscPoller = null;
+
 discordBot.login(settings.secrets.discord_token);
 
 discordBot.on("ready", () => {
     console.log("Discord Bot connected to server.");
     discordBot.user.setStatus("online");
-    setInterval(SetGame, settings.discord.ssc_poll_interval);
+
+    // Make sure we only start one poller
+    // Sometimes discord breaks and this functions gets spammed
+    if (sscPoller == null) {
+        sscPoller = setInterval(SetGame, settings.discord.ssc_poll_interval);
+    }
 });
 
 discordBot.on("message", msg => {
