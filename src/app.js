@@ -53,11 +53,11 @@ discordBot.on("ready", () => {
 });
 
 discordBot.on("message", msg => {
-    let content = msg.content;
+    let content = msg.content.trim();
     let user = msg.author;
 
     let prefix = content[0];
-    let command = content.substring(1, content.length).split(" ");
+    let command = content.substring(1, content.length).split(" ")[0];
 
     // Ignore all messages that aren't DMs or aren't in the channels
     if (msg.channel.type !== "dm" && !settings.discord.channels.includes(msg.channel.name)) {
@@ -70,7 +70,7 @@ discordBot.on("message", msg => {
         // command to function mappings
         book = () => BookServer(user);
         unbook = () => UnbookServer(user);
-        demos = () => RequestDemos(user, command[1]);
+        demos = () => RequestDemos(user, content.substring(command.length+1).trim());
         servers = () => ServerList(msg.channel);
         server_status = () => ServerStatus(user);
         help = () => msg.channel.sendMessage(HELP_MESSAGE);
@@ -88,7 +88,7 @@ discordBot.on("message", msg => {
             "help": help,
         }
 
-        commandFn = commandFunctions[command[0]];
+        commandFn = commandFunctions[command];
         if (commandFn) {
             commandFn();
         }
