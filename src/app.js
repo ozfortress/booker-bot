@@ -282,7 +282,7 @@ function SetGame() {
             }
         });
 
-        discordBot.user.setGame(`${available} servers available`);
+        discordBot.user.setActivity(`${available} servers available`);
     });
 }
 
