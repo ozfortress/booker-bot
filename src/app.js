@@ -54,7 +54,7 @@ discordBot.on("ready", () => {
     }
 });
 
-discordBot.on("message", msg => {
+discordBot.on("messageCreate", msg => {
     console.log(msg);
     let content = msg.content;
     let user = msg.author;
@@ -71,12 +71,12 @@ discordBot.on("message", msg => {
         Log(`${fullname(user)}: ${content}`);
 
         // command to function mappings
-        book = () => BookServer(user);
-        unbook = () => UnbookServer(user);
-        demos = () => RequestDemos(user, command[1]);
-        servers = () => ServerList(msg.channel);
-        server_status = () => ServerStatus(user);
-        help = () => msg.channel.sendMessage(HELP_MESSAGE);
+        let book = () => BookServer(user);
+        let unbook = () => UnbookServer(user);
+        let demos = () => RequestDemos(user, command[1]);
+        let servers = () => ServerList(msg.channel);
+        let server_status = () => ServerStatus(user);
+        let help = () => msg.channel.sendMessage(HELP_MESSAGE);
 
         commandFunctions = {
             "book": book,
