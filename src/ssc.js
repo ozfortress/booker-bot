@@ -32,7 +32,7 @@ class Client {
         }
     }
 
-    createBooking(user, hours, callback) {
+    async createBooking(user, hours, callback) {
         let query = qs.stringify({ key: this.key, user: vibeWorkaround(user), hours: hours });
 
         try {
@@ -49,7 +49,7 @@ class Client {
         }
     }
 
-    getBooking(user, callback) {
+    async getBooking(user, callback) {
         user = encodeURIComponent(vibeWorkaround(user));
         let query = qs.stringify({ key: this.key });
 
@@ -68,7 +68,7 @@ class Client {
         }
     }
 
-    deleteBooking(user, callback) {
+    async deleteBooking(user, callback) {
         user = encodeURIComponent(vibeWorkaround(user));
         let query = qs.stringify({ key: this.key });
 
