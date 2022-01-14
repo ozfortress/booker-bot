@@ -76,7 +76,7 @@ discordBot.on("messageCreate", msg => {
         let server_status = () => ServerStatus(user);
         let help = () => msg.channel.sendMessage(HELP_MESSAGE);
 
-        commandFunctions = {
+        let commandFunctions = {
             "book": book,
             "unbook": unbook,
             "return": unbook,
@@ -89,7 +89,7 @@ discordBot.on("messageCreate", msg => {
             "help": help,
         }
 
-        commandFn = commandFunctions[command[0]];
+        let commandFn = commandFunctions[command[0]];
         if (commandFn) {
             commandFn();
         }
