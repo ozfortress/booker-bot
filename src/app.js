@@ -35,9 +35,7 @@ let ssc = new SSC.Client({
     key: settings.secrets.ssc_key,
 });
 
-const indents = new Discord.Intents();
-indents.add(Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.DIRECT_MESSAGES);
-let discordBot = new Discord.Client( { intents } );
+let discordBot = new Discord.Client( { intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.DIRECT_MESSAGES] } );
 
 let sscPoller = null;
 
