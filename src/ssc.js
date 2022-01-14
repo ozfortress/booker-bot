@@ -1,13 +1,13 @@
-let fetch = require('node-fetch');
-let qs = require("querystring");
+import fetch from 'node-fetch';
+import qs from "querystring";
 
-const version = 'v1';
+export const version = 'v1';
 
-function vibeWorkaround(user) {
+export function vibeWorkaround(user) {
     return user.replace(/\//g, "");
 }
 
-class Client {
+export class Client {
     constructor(options) {
         this.endpoint = options.endpoint;
         this.key = options.key;
@@ -85,10 +85,4 @@ class Client {
             callback('' + err);
         }
     }
-}
-
-module.exports = {
-    Client: Client,
-    version: version,
-    vibeWorkaround: vibeWorkaround,
 }

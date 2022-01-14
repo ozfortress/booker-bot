@@ -1,10 +1,10 @@
-let Discord = require("discord.js");
-let columnify = require("columnify");
-let stringSimilarity = require('string-similarity');
-let base32 = require('hi-base32');
+import * as Discord from "discord.js";
+import * as columnify from "columnify";
+import * as stringSimilarity from 'string-similarity';
+import * as base32 from 'hi-base32';
 
-let SSC = require("./ssc.js");
-let settings = require("./settings.js");
+import * as SSC from "./ssc.js";
+import * as settings from "./settings.js";
 
 "use strict";
 
@@ -35,7 +35,7 @@ let ssc = new SSC.Client({
     key: settings.secrets.ssc_key,
 });
 
-let discordBot = new Discord.Client( { fetchAllMembers: true } );
+let discordBot = new Discord.Client( { intents: [Discord.Intents.FLAGS.GUILDS] } );
 
 let sscPoller = null;
 
