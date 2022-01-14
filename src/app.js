@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import * as columnify from "columnify";
+import columnify from "columnify";
 import * as stringSimilarity from 'string-similarity';
 import * as base32 from 'hi-base32';
 
@@ -74,7 +74,7 @@ discordBot.on("messageCreate", msg => {
         let demos = () => RequestDemos(user, command[1]);
         let servers = () => ServerList(msg.channel);
         let server_status = () => ServerStatus(user);
-        let help = () => msg.channel.sendMessage(HELP_MESSAGE);
+        let help = () => msg.channel.send(HELP_MESSAGE);
 
         let commandFunctions = {
             "book": book,
@@ -111,7 +111,7 @@ function LogError() {
 function SendError(user) {
     // console.log(arguments);
     LogError.apply(null, arguments);
-    user.sendMessage("Something went wrong, please notify your local administrator to check the logs.");
+    user.send("Something went wrong, please notify your local administrator to check the logs.");
 }
 
 // COMMANDS
@@ -128,7 +128,7 @@ function BookServer(user) {
                 try {
                     let json = JSON.parse(result);
                     if (json['statusMessage'] == "No server available") {
-                        user.sendMessage(`There are no available servers left to book`);
+                        user.send(`There are no available servers left to book`);
                         return;
                     }
                 } catch (e) {}
@@ -147,7 +147,7 @@ function BookServer(user) {
             'Direct connect: ' + DirectLink(string),
             `Visit ${demosURL} for your recorded demos`,
         ].join('\n');
-        user.sendMessage(msg);
+        user.send(msg);
     });
 }
 
@@ -161,7 +161,7 @@ function ResendServer(user) {
         let server = result.server;
         let string = '```' + server['connect-string'] + '```';
         let msg = `You have already booked Server **${server.name}** for **${BOOKING_DURATION} hours**:\n${string}`;
-        user.sendMessage(msg);
+        user.send(msg);
     });
 }
 
@@ -169,7 +169,7 @@ function ServerStatus(user) {
     ssc.getBooking(fullname(user), (error, result) => {
         if (error) {
             if (error == 404) {
-                user.sendMessage("You have not booked a server.");
+                user.send("You have not booked a server.");
                 return;
             }
 
@@ -180,7 +180,7 @@ function ServerStatus(user) {
         let server = result.server;
         let string = '```' + server['connect-string'] + '```';
         let msg = `You have booked Server **${server.name}**:\n${string}`;
-        user.sendMessage(msg);
+        user.send(msg);
     });
 }
 
@@ -188,7 +188,7 @@ function UnbookServer(user) {
     ssc.deleteBooking(fullname(user), (error, result) => {
         if (error) {
             if (error == 404) {
-                user.sendMessage("You have not booked a server.");
+                user.send("You have not booked a server.");
                 return;
             }
 
@@ -196,7 +196,7 @@ function UnbookServer(user) {
             return;
         }
 
-        user.sendMessage("You have successfully unbooked the server.");
+        user.send("You have successfully unbooked the server.");
     });
 }
 
@@ -233,7 +233,7 @@ function ServerList(channel) {
 
         let table = columnify(data, options);
 
-        channel.sendMessage('```' + table + '```');
+        channel.send('```' + table + '```');
     });
 }
 
@@ -266,7 +266,7 @@ function RequestDemos(user, target) {
         name += ` (${decodedName})`
     }
     let message = `Found *${users.length}* users for **${name}**:\n\n${result.join('\n')}`;
-    user.sendMessage(message);
+    user.send(message);
 }
 
 function SetGame() {
