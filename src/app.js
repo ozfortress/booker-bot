@@ -318,6 +318,7 @@ function DemosURL(name) {
     // Remove once vibe.d bug is fixed
     let escapedName = SSC.vibeWorkaround(name);
     // Demo urls use the base32 lower-case RFC 4648 representation of a user's name
+    console.log(base32);
     let encodedName = base32.encode(escapedName).toLowerCase();
     return `${settings.ssc.demo_root_path}/${settings.ssc.client}/${encodedName}`;
 }
