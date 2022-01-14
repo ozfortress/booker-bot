@@ -28,6 +28,7 @@ export class Client {
                 callback(null, json);
             }
         } catch (err) {
+            console.log(err);
             callback('' + err);
         }
     }
