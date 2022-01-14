@@ -77,12 +77,11 @@ export class Client {
 
         try {
             let response = await fetch(`${this.base_url}/bookings/${user}/?${query}`, {method: 'DELETE'});
-            let json = await response.json();
 
             if (response.status != 204) {
-                callback(response.status, json)
+                callback(response.status, '')
             } else {
-                callback(null, json);
+                callback(null, '');
             }
         } catch (err) {
             console.log(err);
