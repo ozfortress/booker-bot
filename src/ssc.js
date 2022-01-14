@@ -1,4 +1,4 @@
-let request = require('request');
+let fetch = require('node-fetch');
 let qs = require("querystring");
 
 const version = 'v1';
@@ -15,65 +15,75 @@ class Client {
         this.base_url = `${this.endpoint}/api/${version}`
     }
 
-    getServers(callback) {
+    async getServers(callback) {
         let query = qs.stringify({ key: this.key });
 
-        request.get(
-            `${this.base_url}/servers/?${query}`,
-            (error, response, body) => {
-                if (error || response.statusCode != 200) {
-                    callback(error || response.statusCode, body);
-                } else {
-                    callback(null, JSON.parse(body));
-                }
+        try {
+            let response = await fetch(`${this.base_url}/servers/?${query}`);
+            let json = await response.json();
+
+            if (response.status != 200) {
+                callback(response.status, json)
+            } else {
+                callback(null, json);
             }
-        );
+        } catch (err) {
+            callback('' + err);
+        }
     }
 
     createBooking(user, hours, callback) {
         let query = qs.stringify({ key: this.key, user: vibeWorkaround(user), hours: hours });
 
-        request.post(
-            `${this.base_url}/bookings/?${query}`,
-            (error, response, body) => {
-                if (error || response.statusCode != 200) {
-                    callback(error || response.statusCode, body);
-                } else {
-                    callback(null, JSON.parse(body));
-                }
+        try {
+            let response = await fetch(`${this.base_url}/bookings/?${query}`, {method: 'POST'});
+            let json = await response.json();
+
+            if (response.status != 200) {
+                callback(response.status, json)
+            } else {
+                callback(null, json);
             }
-        );
+        } catch (err) {
+            callback('' + err);
+        }
     }
 
     getBooking(user, callback) {
         user = encodeURIComponent(vibeWorkaround(user));
         let query = qs.stringify({ key: this.key });
-        request.get(
-            `${this.base_url}/bookings/${user}/?${query}`,
-            (error, response, body) => {
-                if (error || response.statusCode != 200) {
-                    callback(error || response.statusCode, body);
-                } else {
-                    callback(null, JSON.parse(body));
-                }
+
+
+        try {
+            let response = await fetch(`${this.base_url}/bookings/${user}/?${query}`);
+            let json = await response.json();
+
+            if (response.status != 200) {
+                callback(response.status, json)
+            } else {
+                callback(null, json);
             }
-        );
+        } catch (err) {
+            callback('' + err);
+        }
     }
 
     deleteBooking(user, callback) {
         user = encodeURIComponent(vibeWorkaround(user));
         let query = qs.stringify({ key: this.key });
 
-        request.delete(
-            `${this.base_url}/bookings/${user}/?${query}`,
-            (error, response, body) => {
-                if (error || response.statusCode != 204) {
-                    callback(error || response.statusCode);
-                } else {
-                    callback(null);
-                }
+        try {
+            let response = await fetch(`${this.base_url}/bookings/${user}/?${query}`, {method: 'DELETE'});
+            let json = await response.json();
+
+            if (response.status != 204) {
+                callback(response.status, json)
+            } else {
+                callback(null, json);
             }
-        );
+        } catch (err) {
+            callback('' + err);
+        }
     }
 }
 
