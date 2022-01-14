@@ -35,7 +35,7 @@ let ssc = new SSC.Client({
     key: settings.secrets.ssc_key,
 });
 
-let discordBot = new Discord.Client( { intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.GUILD_MESSAGES, Discord.Intents.DIRECT_MESSAGES] } );
+let discordBot = new Discord.Client( { intents: [Discord.Intents.FLAGS.GUILDS | Discord.Intents.GUILD_MESSAGES | Discord.Intents.DIRECT_MESSAGES] } );
 
 let sscPoller = null;
 
