@@ -53,6 +53,7 @@ discordBot.on("ready", () => {
 });
 
 discordBot.on("message", msg => {
+    console.log(msg);
     let content = msg.content;
     let user = msg.author;
 
