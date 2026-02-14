@@ -1,0 +1,4 @@
+{
+    "channels": ["bookings"],
+    "ssc_poll_interval": 10000
+}
