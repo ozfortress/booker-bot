@@ -9,8 +9,7 @@
     "email": "bryanch7@gmail.com"
   },
   "scripts": {
-    "start": "node app.js",
-    "preinstall": "node preinstall.js"
+    "start": "node app.js"
   },
   "engines": {
     "node": "^4.4.4",
